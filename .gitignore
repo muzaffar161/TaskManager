@@ -35,9 +35,6 @@
 # Test results
 TestResults/
 
-# Kestrel
-appsettings.Development.json
-Properties/launchSettings.json
 
 # Other
 tmp/
