@@ -1,0 +1,62 @@
+@model IEnumerable<TaskManager.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Task List";
+}
+
+<h1>Task List</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div>
+    <strong>Filter by:</strong>
+    <a asp-action="Index">All</a> |
+    <a asp-action="Index" asp-route-category="@TaskManager.Models.Category.Work">Work</a> |
+    <a asp-action="Index" asp-route-category="@TaskManager.Models.Category.Study">Study</a> |
+    <a asp-action="Index" asp-route-category="@TaskManager.Models.Category.Personal">Personal</a>
+</div>
+<br/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @(item.IsDone ? "Done" : "Active")
+            </td>
+            <td>
+                <form asp-action="Toggle" asp-route-id="@item.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm @(item.IsDone ? "btn-secondary" : "btn-success")">
+                        @(item.IsDone ? "Mark Active" : "Mark Done")
+                    </button>
+                </form>
+                <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
